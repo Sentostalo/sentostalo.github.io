@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	
+	<title>Ground ID Converter</title>
+</head>
+<body>
+
+<p>XML</p>
+<textarea id="input"></textarea>
+<p>
+<input type="submit" id="submit" value="convert">
+</p>
+<p>Converted</p>
+<textarea id="output"></textarea>
+<script type="text/javascript">
+var getval = function(t){ return document.getElementById(t); };
+var input = getval('input');
+var output = getval('output');
+var submit = getval('submit');
+submit.onclick = function(){
+    var groundregex = /(?:<S>)(:?.*?)(?:<\/S>)/
+    var grounds = input.value.match(groundregex)
+    var converted = grounds[0].replace(/T="6"/g, 'T="11"')
+    console.log(converted)
+    output.value = input.value.replace(groundregex,converted)
+};
+</script>
+
+
+</body></html>
