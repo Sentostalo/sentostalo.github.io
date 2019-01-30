@@ -149,7 +149,7 @@ function makeSelectors(div_id){
 			
 			select.push('</select></td>');
 			
-			select.push('<td><select id="kit_'+input_id+'_quality" onchange="updateKit(0,this.value,'+input_id+')"><option value="-1">Quality</option>');
+			select.push('<td><select id="kit_'+input_id+'_quality" onchange="updateKit(kit_'+input_id+'_select.value,this.value,'+input_id+')"><option value="0">Quality</option>');
 			qualities = ['Poor','Normal','Good','High','Exceptional']
 			for(id in qualities){
 				var kitData = parseKitData(KITS[id],-1);
