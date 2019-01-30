@@ -1,0 +1,169 @@
+<html>
+<head>
+<!--Shitty kit visualiser by Drescen#0000-->
+	<title>Kit Visualiser by Drescen#0000</title>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="style.css"/>
+	<link rel="stylesheet"href="https://fonts.googleapis.com/css?family=Roboto">
+</head>
+<body>
+<div class="kit_container">
+	<div class="kit_grid_container" background-image="http://transformice.com/images/x_deadmeat/x_interfaces/x_fond_perso_1.png">
+		<table class="kit_grid_table">
+			<tr class="kit_grid_row">
+				<td class="kit_grid_cell" id="kit_1">
+					<img class="kit" src="blank_kit.png" height="30" width="30" id="kit_1_img">
+					<img class="overlay" src="normal_overlay.png" id="kit_1_over">
+				</td>
+				<td class="kit_grid_cell" id="kit_2">
+					<img class="kit" src="blank_kit.png" height="30" width="30" id="kit_2_img">
+					<img class="overlay" src="normal_overlay.png" id="kit_2_over">
+				</td>
+				<td class="kit_grid_cell" id="kit_3">
+					<img class="kit" src="blank_kit.png" height="30" width="30" id="kit_3_img">
+					<img class="overlay" src="normal_overlay.png" id="kit_3_over">
+				</td>
+			</tr>
+			<tr class="kit_grid_row">
+				<td class="kit_grid_cell" id="kit_4">
+					<img class="kit" src="blank_kit.png" height="30" width="30" id="kit_4_img">
+					<img class="overlay" src="normal_overlay.png" id="kit_4_over">
+				</td>
+				<td class="kit_grid_cell" id="kit_5">
+					<img class="kit" src="blank_kit.png" height="30" width="30" id="kit_5_img">
+					<img class="overlay" src="normal_overlay.png" id="kit_5_over">
+				</td>
+				<td class="kit_grid_cell" id="kit_6">
+					<img class="kit" src="blank_kit.png" height="30" width="30" id="kit_6_img">
+					<img class="overlay" src="normal_overlay.png" id="kit_6_over">
+				</td>
+			</tr>
+			<tr class="kit_grid_row">
+				<td class="kit_grid_cell" id="kit_7">
+					<img class="kit" src="blank_kit.png" height="30" width="30" id="kit_7_img">
+					<img class="overlay" src="normal_overlay.png" id="kit_7_over">
+				</td>
+				<td class="kit_grid_cell" id="kit_8">
+					<img class="kit" src="blank_kit.png" height="30" width="30" id="kit_8_img">
+					<img class="overlay" src="normal_overlay.png" id="kit_8_over">
+				</td>
+				<td class="kit_grid_cell" id="kit_9">
+					<img class="kit" src="blank_kit.png" height="30" width="30" id="kit_9_img">
+					<img class="overlay" src="normal_overlay.png" id="kit_9_over">
+				</td>
+			</tr>
+			<tr class="kit_grid_row">
+				<td class="kit_grid_cell" id="kit_10">
+					<img class="kit" src="blank_kit.png" height="30" width="30" id="kit_10_img">
+					<img class="overlay" src="normal_overlay.png" id="kit_10_over">
+				</td>
+				<td class="kit_grid_cell" id="kit_11">
+					<img class="kit" src="blank_kit.png" height="30" width="30" id="kit_11_img">
+					<img class="overlay" src="normal_overlay.png" id="kit_11_over">
+				</td>
+				<td class="kit_grid_cell" id="kit_12">
+					<img class="kit" src="blank_kit.png" height="30" width="30" id="kit_12_img">
+					<img class="overlay" src="normal_overlay.png" id="kit_12_over">
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="kit_info_container">
+		<p id="kit_info"></p>
+	</div>
+</div>
+<br>
+<div class="kit_selection_container" id="select_container"/>
+</div>
+<br>
+<div class="kit_json_container">
+	<textarea id="kit_json"></textarea><br><br>
+	<button onclick="updateKitByJson()">Load</button>
+</div>
+<!--
+<img class="overlay" src="poor_overlay.png">
+<img class="kit" src="http://transformice.com/images/x_deadmeat/x_interfaces/buffs/48.jpg" height="30" width="30">-->
+
+<script type="text/javascript" src="scripts.js"></script>
+<script>
+var QUALITY_OVERLAY=[]
+		QUALITY_OVERLAY[0]='poor_overlay.png';
+		QUALITY_OVERLAY[1]='normal_overlay.png';
+		QUALITY_OVERLAY[2]='good_overlay.png';
+		QUALITY_OVERLAY[3]='high_overlay.png';
+		QUALITY_OVERLAY[4]='exceptional_overlay.png';
+		
+function updateKitByJson(){
+	var data = JSON.parse(document.getElementById('kit_json').value);
+	for(index in data){
+		k=data[index]
+		for (attr in k){
+			updateKit(k['kit'], k['quality'], index);
+			document.getElementById('kit_'+index+'_select').value = k['kit'];
+			document.getElementById('kit_'+index+'_quality').value = k['quality'];
+		};
+	};
+}
+
+function updateKit(kit_buff, quality_id, div_id){
+	if(quality_id!=-1){
+		document.getElementById('kit_'+div_id+'_over').src = QUALITY_OVERLAY[quality_id];
+	};
+	
+    kit_buff = Math.abs(parseInt(kit_buff,10))
+    if (kit_buff==0){
+        document.getElementById('kit_'+div_id+'_img').src = 'blank_kit.png';
+    }else{
+        document.getElementById('kit_'+div_id+'_img').src = 'http://transformice.com/images/x_deadmeat/x_interfaces/buffs/'+kit_buff+'.jpg';
+    };
+	
+	
+	function getValue(elem){
+		return elem.options[elem.selectedIndex].value
+	}
+	data = {}
+	for (i = 1; i < 13; i++) {
+		kit = getValue(document.getElementById('kit_'+i+'_select'));
+		quality = getValue(document.getElementById('kit_'+i+'_quality'));
+		data[i]={'kit':kit, 'quality':quality}
+	}
+	document.getElementById('kit_json').value=JSON.stringify(data);
+}
+
+function makeSelectors(div_id){
+	var table=['<table class="kit_selector_table">'];
+	for (r = 0; r < 4; r++) {
+	
+		table.push('<tr class="kit_selector_row">');
+		
+		for (c = 0; c < 3; c++) {
+			
+			table.push('<td class="kit_selector_cell">');
+			var select = []
+			var input_id=(r*3+(c+1))
+			select.push('<select id="kit_'+input_id+'_select" onchange="updateKit(this.value,-1,'+input_id+')"><option value="0">Kit</option>');
+			for(id in KITS){
+				var kitData = parseKitData(KITS[id],-1);
+				select.push('<option value="'+kitData['id']+'" >'+kitData['name']+'</option>');
+			};
+			
+			select.push('</select></td>');
+			
+			select.push('<td><select id="kit_'+input_id+'_quality" onchange="updateKit(0,this.value,'+input_id+')"><option value="-1">Quality</option>');
+			qualities = ['Poor','Normal','Good','High','Exceptional']
+			for(id in qualities){
+				var kitData = parseKitData(KITS[id],-1);
+				select.push('<option value="'+id+'" >'+qualities[id]+'</option>');
+			};
+			select.push('</select></td>');
+			table.push(select.join(''));
+		};
+		table.push('</tr>');
+	};
+	table.push('</table>');
+	document.getElementById(div_id).innerHTML=(table.join(''));
+};	
+makeSelectors('select_container');
+</script>
+</body>
+</html>
