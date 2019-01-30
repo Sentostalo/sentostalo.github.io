@@ -1,0 +1,27 @@
+body {
+	margin: 0px;
+}
+
+div#kits_outer{
+	padding: 10px;
+	padding-top: 100px;
+}
+div#kits_quality_selector{
+	margin: auto;
+	padding: 10px;
+	width: 95%;
+}
+
+div#kits_inner{
+	margin: auto;
+	width: 95%;
+}
+
+table#kits_table, tr, td {
+	font-family: 'Roboto', sans-serif;
+	border: 1px solid black;
+	font-size: 20px;
+}
+.kit_text {
+	font-family: 'Roboto', sans-serif;
+}
